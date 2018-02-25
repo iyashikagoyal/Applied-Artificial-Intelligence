@@ -1,0 +1,103 @@
+Applied Artificial Intelligence Project - 1
+
+Domain: Loan Evaluation Engine (LEE)
+
+
+Abstract:
+This rule based expert system is designed using JESS Rule Engine. It acts as an pre - evaluating system for loan applying users. In this system, I have considered some of the rules which lenders consider while evaluating a loan application. This will help applicants to see if there loan-application will be approved or rejected.
+
+
+Features:
+This system was designed to interact with the user by letting him enter the parameters, it then computes the final result of the application. The various inputs to the system are:
+• Income
+• Credit-score
+• Required loan-amount
+• Collateral value (value of the collateral used to support a loan) • Time period for returning the loan.
+Once we get all the inputs, we now run the module.
+The structure of the system:
+• It first checks the loan demanded is provided by the lender. The
+maximum loan provided is 10000000 by this lender.
+• Then , it checks if the collateral provided is sufficient to support the loan
+I.e it should be more than the loan amount.
+• Then, it checks the credit score of the applicant to see if the risk is low or
+high. The range for the credit-score I considered is 600-850.
+• Then , it checks if the applicant is able to pay the monthly installments
+with his 60 percent of the income in the given period of time.
+• Combining all the above checks is one of the criteria followed by lenders
+to decide your loan application. So, if all of the rules are true , then your loan application is approved. Congratulations!
+ Rules and Description:
+Knowledge base: The Knowledge base of the system consists of the
+following:
+
+
+Facts:
+1.
+• • • • •
+Questions: This consists of questions. The questions have an id to distinguish them type , which specifies the type of expected answer. The various questions are:
+What is your income?
+What is the total value of collateral?
+What is your credit-score?
+In how many years will you repay the loan? What is the loan amount required?
+
+Templates:
+1. Applicant template: It stores all the applicant’s information that was
+asked to him via questions.
+(deftemplate applicant
+(slot income (default 0))
+(slot collateral (default 0)) (slot credit-score (default 0)) (slot time-period (default 0)) (slot loan-amount (default 0)))
+2. Question template: This holds the questions in the format they have to be asked from the user.
+(deftemplate question (slot text) (slot type) (slot ident))
+3. Answer template: This stores the answers that are provided by the
+user .
+(deftemplate answer (slot ident) (slot text))
+4. Loan-Check Template: This holds the rating (1) if the loan amount does not exceed the value that can be lend else 0.
+(deftemplate loan-check (slot rating (default 0)))
+5. Sufficient-Collateral template: This stores the rating (1) if there is sufficient collateral else 0.
+(deftemplate sufficient-collateral (slot rating (default 0)))
+6. Risk template: This holds 1 if the credit score is between 600 and 850 else 0.
+(deftemplate risk (slot rating (default 0)))
+
+ 7. Payment-ability template: This holds 1 if user is able to pay the monthly installments with 60 percent of his salary.
+(deftemplate payment-ability (slot rating (default 0) ))
+8. Final-result template: This holds the final result of the evaluation.
+(deftemplate final-result (slot text))
+
+Rules:
+1. defrule ask::ask-question-by-id To asks the questions to user.
+2. defrule welcome
+Displays the welcome message to the user.
+3. defrule request-income
+rule to Request the income
+4. defrule request-collateral
+rule to Request the collateral
+5. defrule request-credit-score
+rule to Request the credit-score
+6. defrule request-time-period
+rule to Request the time-period
+7. defrule request-loan-amount
+rule to Request the loan-amount
+8. defrule assert-applicant-fact
+rule to assert all the details as facts
+9. defrule check-amount
+rule to check if the loan demanded is provided by the lender.
+10. defrule check-sufficient-collateral
+rule to check if the collateral provided is sufficient to support the loan.
+11. defrule check-credit
+rule to check the credit score of the applicant to see if the
+risk is low or high
+12. defrule check-payment-ability
+rule to check if the applicant is able to pay the monthly installments with his 60 percent of the income in the given period of time.
+13. defrule check-eligibilty
+rule to check eligibilty considering sufficient-collateral, ability-to- payment, credit history all together.
+
+ 14. defmodule result
+rule to print the result.
+USAGE MANUAL:
+1.
+2.
+Save the “1_loan.clp” file in the “Jess71p2\examples\jess” folder on your local system.
+Go to command line interface. Change the current directory to Jess71p2.
+3.
+4. bin/jess examples/jess/1_loan.clp
+
+ 
